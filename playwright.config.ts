@@ -1,9 +1,5 @@
-import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
-
-if (existsSync('.env')) {
-  process.loadEnvFile('.env');
-}
+import { adminStorageState, env } from './src/config/env';
 
 const isCI = !!process.env.CI;
 
@@ -19,7 +15,7 @@ export default defineConfig({
     ? [['github'], ['html', { open: 'never' }]]
     : [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: process.env.BASE_URL ?? 'https://opensource-demo.orangehrmlive.com',
+    baseURL: env.baseUrl,
     navigationTimeout: 30_000,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
@@ -27,8 +23,14 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'], storageState: adminStorageState },
+      dependencies: ['setup'],
     },
   ],
 });

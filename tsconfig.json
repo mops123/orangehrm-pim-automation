@@ -7,7 +7,11 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noEmit": true,
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@config/*": ["./src/config/*"],
+      "@pages/*": ["./src/pages/*"]
+    }
   },
   "include": ["src/**/*.ts", "tests/**/*.ts", "playwright.config.ts"]
 }
