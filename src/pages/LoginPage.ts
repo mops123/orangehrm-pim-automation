@@ -1,4 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
+import { inputGroup } from '@components/inputGroup';
 
 export class LoginPage {
   readonly username: Locator;
@@ -25,9 +26,6 @@ export class LoginPage {
   }
 
   fieldError(field: 'Username' | 'Password') {
-    return this.page
-      .locator('.oxd-input-group')
-      .filter({ has: this.page.locator('label', { hasText: field }) })
-      .locator('.oxd-input-field-error-message');
+    return inputGroup(this.page, field).locator('.oxd-input-field-error-message');
   }
 }

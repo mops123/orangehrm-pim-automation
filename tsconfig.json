@@ -9,6 +9,7 @@
     "noEmit": true,
     "types": ["node"],
     "paths": {
+      "@components/*": ["./src/components/*"],
       "@config/*": ["./src/config/*"],
       "@pages/*": ["./src/pages/*"]
     }
