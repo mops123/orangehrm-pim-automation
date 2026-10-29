@@ -11,6 +11,7 @@
     "paths": {
       "@components/*": ["./src/components/*"],
       "@config/*": ["./src/config/*"],
+      "@data/*": ["./src/data/*"],
       "@pages/*": ["./src/pages/*"]
     }
   },
