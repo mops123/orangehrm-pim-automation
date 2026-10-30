@@ -1,5 +1,6 @@
 import { test, expect } from '@fixtures/test';
 import type { Page } from '@playwright/test';
+import { buildEmployee } from '@data/employee';
 
 function trackCreateRequests(page: Page): string[] {
   const requests: string[] = [];
@@ -67,4 +68,28 @@ test.describe('Add Employee validation', () => {
       expect(createRequests).toHaveLength(0);
     },
   );
+
+  for (const [title, toId] of [
+    ['same case', (id: string) => id],
+    ['different case', (id: string) => id.toLowerCase()],
+  ] as const) {
+    test(
+      `rejects a duplicate Employee Id (${title})`,
+      { tag: '@regression' },
+      async ({ page, createdEmployee, addEmployeePage }) => {
+        const createRequests = trackCreateRequests(page);
+
+        await addEmployeePage.fillForm(
+          buildEmployee({ employeeId: toId(createdEmployee.employeeId) }),
+        );
+        await addEmployeePage.saveButton.click();
+
+        await expect(addEmployeePage.fieldError(addEmployeePage.employeeId)).toHaveText(
+          'Employee Id already exists',
+        );
+        await expect(page).toHaveURL(/addEmployee/);
+        expect(createRequests).toHaveLength(0);
+      },
+    );
+  }
 });
