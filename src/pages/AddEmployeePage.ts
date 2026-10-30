@@ -21,7 +21,7 @@ export class AddEmployeePage {
     await this.page.goto('/web/index.php/pim/addEmployee');
   }
 
-  async fill(employee: Employee) {
+  async fillForm(employee: Employee) {
     await this.firstName.fill(employee.firstName);
     await this.middleName.fill(employee.middleName);
     await this.lastName.fill(employee.lastName);
