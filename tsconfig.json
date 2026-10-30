@@ -9,9 +9,11 @@
     "noEmit": true,
     "types": ["node"],
     "paths": {
+      "@api/*": ["./src/api/*"],
       "@components/*": ["./src/components/*"],
       "@config/*": ["./src/config/*"],
       "@data/*": ["./src/data/*"],
+      "@fixtures/*": ["./src/fixtures/*"],
       "@pages/*": ["./src/pages/*"]
     }
   },
